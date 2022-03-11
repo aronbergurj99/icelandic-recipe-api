@@ -1,6 +1,7 @@
 import pymongo
 from typing import List
 from models.recipe_model import RecipeModel
+from bson.objectid import ObjectId
 
 class MongoDbConnection:
     def __init__(self, uri: str, db: str):
@@ -17,8 +18,14 @@ class MongoDbConnection:
         self.client["recipes"].update_one({'url': recipe.url},{'$set': recipe.dict()}, upsert=True)
 
     def get_all_tags(self) -> List[str]:
-        return self.client['recipes'].distinct("tags")
-    
+        res = self.client['recipes'].distinct("tags")
+        return res
+
+    def get_all_groups(self) -> List[str]:
+        groups = self.client['groups'].find()
+        print(groups)
+        return [group["group"] for group in groups]
+
     def set_groups(self):
         recipes = self.client['recipes'].find({"groups": { "$exists":True, "$eq":[]}})
         for recipe in recipes:
@@ -41,3 +48,8 @@ class MongoDbConnection:
         ])
         results = [RecipeModel(**res) for res in results]
         return results
+
+    def get_recipe(self, id:str) -> RecipeModel:
+        res = self.client['recipes'].find_one({"_id": ObjectId(id)})
+        print(res)
+        return RecipeModel(**res)
