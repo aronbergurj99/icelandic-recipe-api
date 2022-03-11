@@ -1,0 +1,25 @@
+Could not scrape URL: https://www.gottimatinn.is/uppskriftir/fylltar-dodlur-i-hnetuhjup,
+Error: 1 validation error for RecipeModel
+_id
+  field required (type=value_error.missing)
+==================
+Could not scrape URL: https://www.gottimatinn.is/uppskriftir/fylltar-dodlur-i-hnetuhjup,
+Error: 1 validation error for RecipeModel
+_id
+  field required (type=value_error.missing)
+==================
+Could not scrape URL: https://www.gottimatinn.is/uppskriftir/fylltar-dodlur-i-hnetuhjup,
+Error: 1 validation error for RecipeModel
+_id
+  field required (type=value_error.missing)
+==================
+Could not scrape URL: https://www.gottimatinn.is/uppskriftir/fylltar-dodlur-i-hnetuhjup,
+Error: 1 validation error for RecipeModel
+_id
+  field required (type=value_error.missing)
+==================
+Could not scrape URL: https://www.gottimatinn.is/uppskriftir/fylltar-dodlur-i-hnetuhjup,
+Error: 1 validation error for RecipeModel
+_id
+  field required (type=value_error.missing)
+==================

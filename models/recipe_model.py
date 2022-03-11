@@ -1,5 +1,17 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
+from bson.objectid import ObjectId
+
+class PydanticObjectId(ObjectId):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if not isinstance(v, ObjectId):
+            return ""
+        return str(v)
 
 class IngredientModel(BaseModel):
     qty: Optional[str]
@@ -14,7 +26,7 @@ class InstructionModel(BaseModel):
     steps: List[str]
 
 class RecipeModel(BaseModel):
-    _id: Optional[str]
+    id: Optional[PydanticObjectId] = Field(default=None, alias="_id")
     name: str
     description: Optional[str]
     url: str
