@@ -3,6 +3,17 @@ free REST API for recipes written in Icelandic.
 
 # Endpoints
 
+## POST
+[/signup](#post-signup)</br>
+[/token](#post-token)</br>
+___
+## GET
+`Requires auth` [/recipes](#get-recipes)</br>
+`Requires auth` [/recipes/{id}](#get-recipesid)</br>
+`Requires auth` [/groups](#get-groups)</br>
+`Requires auth` [/tags](#get-tags)</br>
+___
+
 ### POST /signup
 
 **Body**
