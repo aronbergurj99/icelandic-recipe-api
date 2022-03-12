@@ -3,6 +3,57 @@ free REST API for recipes written in Icelandic.
 
 # Endpoints
 
+### POST /signup
+
+**Body**
+```
+{
+    "username": "random@randomemail.com",
+    "password": "strongpassword!1234"
+}
+```
+
+**Response**
+```
+//On sucess
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoicmFuZG9tQHJhbmRvbTNlbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImV4cGlyZXMiOjE2NDcwOTQyMjEuNjY0OTA2fQ.PLvf70iLTpKdJgOKlvEyg95m9n2AOxcaXFNJFC28XR8",
+    "token_type": "bearer"
+}
+or
+
+//If username is taken
+{
+    "detail": "Username is already taken"
+}
+```
+___
+
+### POST /token
+
+**Body**
+```
+{
+    "username": "random@randomemail.com",
+    "password": "strongpassword!1234"
+}
+```
+**Response**
+```
+//On sucess
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoicmFuZG9tQHJhbmRvbTNlbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImV4cGlyZXMiOjE2NDcwOTQyMjEuNjY0OTA2fQ.PLvf70iLTpKdJgOKlvEyg95m9n2AOxcaXFNJFC28XR8",
+    "token_type": "bearer"
+}
+or
+
+//If incorrect username or password
+{
+    "detail": "Incorrect username or password"
+}
+```
+___
+
 ### GET /recipes
 **Parameters**
 
