@@ -28,8 +28,7 @@ ___
 ```
 //On sucess
 {
-    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoicmFuZG9tQHJhbmRvbTNlbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImV4cGlyZXMiOjE2NDcwOTQyMjEuNjY0OTA2fQ.PLvf70iLTpKdJgOKlvEyg95m9n2AOxcaXFNJFC28XR8",
-    "token_type": "bearer"
+    "Detail": "successfully created user"
 }
 or
 
