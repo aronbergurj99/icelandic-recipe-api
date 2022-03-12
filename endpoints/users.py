@@ -11,7 +11,7 @@ from db_connections.mongo_db_connection import MongoDbConnection
 
 router = APIRouter()
 
-@router.post('/user/signup', status_code=202)
+@router.post('/signup', status_code=202)
 @inject
 async def user_signup(
     mongo_db: MongoDbConnection = Depends(

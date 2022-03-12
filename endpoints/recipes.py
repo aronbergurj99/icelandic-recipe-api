@@ -20,7 +20,7 @@ async def get_recipes(
     mongo_db: MongoDbConnection = Depends(
         Provide[Container.mongo_db_connection_provider]
     ),
-    pageSize: Optional[int] = Query(34, ge=1, le=64),
+    pageSize: Optional[int] = Query(24, ge=1, le=64),
     page: Optional[int] = Query(1, ge=1),
     groups: Optional[List[str]] = Query(None),
     tags: Optional[List[str]] = Query(None),

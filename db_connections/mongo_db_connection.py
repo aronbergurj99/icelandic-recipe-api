@@ -51,6 +51,7 @@ class MongoDbConnection:
 
     def get_recipe(self, id:str) -> RecipeModel:
         res = self.client['recipes'].find_one({"_id": ObjectId(id)})
+        if not res: return None
         return RecipeModel(**res)
     
     def add_user(self, user: UserDbModel) -> None:
