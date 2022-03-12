@@ -1,5 +1,8 @@
 # icelandic-recipe-api
-free REST API for recipes written in Icelandic.
+free REST API for recipes written in Icelandic. The API uses data from gottimatinn.is and is therefore only for non commercial purposes.
+
+# Authentication
+Before you can access any data from the API you will have to make an POST request to [/token](#post-token). This request will return a token that needs to be in headers under `Authorization`. 
 
 # Endpoints
 
