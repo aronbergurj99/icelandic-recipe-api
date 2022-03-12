@@ -2,6 +2,7 @@ import pymongo
 from typing import List
 from models.recipe_model import RecipeModel
 from bson.objectid import ObjectId
+from models.user_model import UserDbModel
 
 class MongoDbConnection:
     def __init__(self, uri: str, db: str):
@@ -23,7 +24,6 @@ class MongoDbConnection:
 
     def get_all_groups(self) -> List[str]:
         groups = self.client['groups'].find()
-        print(groups)
         return [group["group"] for group in groups]
 
     def set_groups(self):
@@ -51,5 +51,14 @@ class MongoDbConnection:
 
     def get_recipe(self, id:str) -> RecipeModel:
         res = self.client['recipes'].find_one({"_id": ObjectId(id)})
-        print(res)
         return RecipeModel(**res)
+    
+    def add_user(self, user: UserDbModel) -> None:
+        userExists = self.client['users'].find_one({"username": user.username})
+        print(userExists)
+        if userExists: return -1
+
+        self.client['users'].insert_one(user.dict())
+    
+    def get_user(self, username: str) -> UserDbModel:
+        return UserDbModel(**self.client['users'].find_one({"username": username}))

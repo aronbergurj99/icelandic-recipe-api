@@ -1,6 +1,9 @@
 
 from optparse import Option
 from fastapi import APIRouter, Depends, Query, HTTPException, Path
+from fastapi.security import OAuth2PasswordBearer
+
+from auth.auth_bearer import JWTBearer
 from dependency_injector.wiring import inject, Provide
 from typing import List, Optional
 
@@ -9,6 +12,7 @@ from db_connections.mongo_db_connection import MongoDbConnection
 from infrastructure.container import Container
 
 router = APIRouter()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/authenticate")
 
 @router.get('/recipes', status_code=200)
 @inject
@@ -21,6 +25,8 @@ async def get_recipes(
     groups: Optional[List[str]] = Query(None),
     tags: Optional[List[str]] = Query(None),
     random: bool = False,
+    token: str = Depends(JWTBearer(Container.auth_provider)),
+
 ):
     query = {}
     if groups:
@@ -41,6 +47,8 @@ async def get_recipes(
     mongo_db: MongoDbConnection = Depends(
         Provide[Container.mongo_db_connection_provider]
     ),
+    token: str = Depends(JWTBearer(Container.auth_provider)),
+
 ):
     res = mongo_db.get_recipe(id)
     if not res:
@@ -53,6 +61,8 @@ async def get_groups(
     mongo_db: MongoDbConnection = Depends(
         Provide[Container.mongo_db_connection_provider]
     ),
+    token: str = Depends(JWTBearer(Container.auth_provider)),
+
 
 ):
     return mongo_db.get_all_groups()
@@ -62,6 +72,7 @@ async def get_groups(
 async def get_tags(
     mongo_db: MongoDbConnection = Depends(
         Provide[Container.mongo_db_connection_provider]
-    )
+    ),
+    token: str = Depends(JWTBearer(Container.auth_provider)),
 ):
     return mongo_db.get_all_tags()
