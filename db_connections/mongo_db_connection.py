@@ -16,7 +16,25 @@ class MongoDbConnection:
         self.client["recipes"].insert_many(recipes)
     
     def insert_recipe(self, recipe: RecipeModel) -> None:
-        self.client["recipes"].update_one({'url': recipe.url},{'$set': recipe.dict()}, upsert=True)
+        """
+            Inserts recipe if it does not exist. 
+        """
+        recipe = recipe.dict()
+        recipe.pop('id', None)
+
+        self.client["recipes"].update_one({'url': recipe["url"]},{'$set': recipe}, upsert=True)
+    
+    def safe_insert_recipe(self, recipe: RecipeModel) -> None:
+        """
+            Adds new recipe if it does not exist. Also add the groups to the recipe.
+        """
+        recipe = recipe.dict()
+        groups = self.client['groups'].find({"tags": {"$in": recipe["tags"]}})
+        g = set()
+        for group in groups:
+            g.add(group["group"])
+        recipe["groups"] = list(g)
+        self.insert_recipe(recipe=RecipeModel(**recipe))
 
     def get_all_tags(self) -> List[str]:
         res = self.client['recipes'].distinct("tags")

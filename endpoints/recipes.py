@@ -2,17 +2,39 @@
 from optparse import Option
 from fastapi import APIRouter, Depends, Query, HTTPException, Path
 from fastapi.security import OAuth2PasswordBearer
+from fastapi_utils.tasks import repeat_every
 
 from auth.auth_bearer import JWTBearer
 from dependency_injector.wiring import inject, Provide
 from typing import List, Optional
+from webscrapers.webscraper import Webscraper
 
 from models.recipe_model import RecipeModel
 from db_connections.mongo_db_connection import MongoDbConnection
 from infrastructure.container import Container
+from utils.urls import gottimatinn_urls
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/authenticate")
+
+@router.on_event("startup")
+@repeat_every(seconds=3600 * 24, raise_exceptions=False)
+@inject
+async def add_recipes(
+    mongo_db: MongoDbConnection = Depends(
+        Provide[Container.mongo_db_connection_provider]
+    ),
+    scraper: Webscraper = Depends(
+        Provide[Container.gottimatinn_scraper]
+    )
+) -> None:
+    """
+        Scrapes new recipes every 24 hours.
+    """
+    urls = gottimatinn_urls(2)
+    for url in urls:
+        recipe = scraper.scrape_recipe(url)
+        mongo_db.safe_insert_recipe(recipe)
 
 @router.get('/recipes', status_code=200)
 @inject

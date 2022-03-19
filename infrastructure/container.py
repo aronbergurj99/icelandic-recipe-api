@@ -3,6 +3,8 @@ from infrastructure.settings import Settings
 
 from db_connections.mongo_db_connection import MongoDbConnection
 from auth.auth_handler import AuthHandler
+from webscrapers.webscraper import Webscraper
+from webscrapers.gottimatinn_scraper import GottimatinnScraper
 
 
 class Container(containers.DeclarativeContainer):
@@ -25,6 +27,17 @@ class Container(containers.DeclarativeContainer):
         secret=config.secret,
         algorithm=config.algorithm
     )
+
+    __gottimatinn_scraper_provider = providers.Factory(
+        GottimatinnScraper
+    )
+
+    gottimatinn_scraper = providers.Factory(
+        Webscraper,
+        __gottimatinn_scraper_provider
+    )
+
+
 
 
 

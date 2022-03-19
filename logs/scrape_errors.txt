@@ -23,3 +23,6 @@ Error: 1 validation error for RecipeModel
 _id
   field required (type=value_error.missing)
 ==================
+Could not scrape URL: https://www.gottimatinn.is/uppskriftir/rjomaostarulla-med-orra-ostakurli,
+Error: scrape() missing 1 required positional argument: 'page_source'
+==================

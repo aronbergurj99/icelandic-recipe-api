@@ -26,10 +26,9 @@ async def user_signup(
     psw_hashed = auth.get_password_hash(user.password)
     user = UserDbModel(username=user.username, hashed_password=psw_hashed)
     res = mongo_db.add_user(user)
-    print(res)
     if res == -1:
         raise HTTPException(status_code=400, detail="Username is already taken")
-    return auth.signJWT(user.username)
+    return {"Detail": "successfully created user"}
 
 @router.post("/token")
 @inject
