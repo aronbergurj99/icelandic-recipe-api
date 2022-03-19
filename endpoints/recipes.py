@@ -31,7 +31,7 @@ async def add_recipes(
     """
         Scrapes new recipes every 24 hours.
     """
-    urls = gottimatinn_urls(2)
+    urls = gottimatinn_urls(10)
     for url in urls:
         recipe = scraper.scrape_recipe(url)
         mongo_db.safe_insert_recipe(recipe)
